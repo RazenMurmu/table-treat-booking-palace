@@ -12,7 +12,7 @@ const steps = [
   {
     id: 2,
     title: 'Pre-Order Your Meal',
-    description: 'Browse our menu and select the dishes you'd like to enjoy.',
+    description: 'Browse our menu and select the dishes you\'d like to enjoy.',
     icon: Utensils,
   },
   {
