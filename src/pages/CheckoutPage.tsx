@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -11,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { format } from 'date-fns';
 import { CreditCard, DollarSign, Calendar, Clock, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/utils';
 
 const CheckoutPage = () => {
   const location = useLocation();
@@ -82,7 +82,6 @@ const CheckoutPage = () => {
     }, 1500);
   };
   
-  // If no reservation or cart data, redirect to home
   if (!reservation || !cart || !cart.length) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -262,7 +261,7 @@ const CheckoutPage = () => {
                           <div className="text-sm text-gray-500">x{item.quantity}</div>
                         </div>
                         <div className="font-medium">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          {formatCurrency(item.price * item.quantity)}
                         </div>
                       </div>
                     ))}
@@ -271,15 +270,15 @@ const CheckoutPage = () => {
                   <div className="border-t pt-4 mb-6">
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-600">Subtotal</span>
-                      <span className="font-medium">${total.toFixed(2)}</span>
+                      <span className="font-medium">{formatCurrency(total)}</span>
                     </div>
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-600">Service Fee</span>
-                      <span className="font-medium">${(total * 0.1).toFixed(2)}</span>
+                      <span className="font-medium">{formatCurrency(total * 0.1)}</span>
                     </div>
                     <div className="flex justify-between font-bold text-lg">
                       <span>Total</span>
-                      <span>${(total * 1.1).toFixed(2)}</span>
+                      <span>{formatCurrency(total * 1.1)}</span>
                     </div>
                   </div>
                   

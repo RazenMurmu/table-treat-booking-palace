@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -8,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/utils';
 
 interface CartItem {
   id: number;
@@ -25,7 +25,6 @@ const CartPage = () => {
   const [reservation, setReservation] = useState<any>(null);
 
   useEffect(() => {
-    // Get cart and reservation from location state or localStorage
     const storedCart = localStorage.getItem('cart');
     const storedReservation = localStorage.getItem('reservation');
     
@@ -150,7 +149,7 @@ const CartPage = () => {
                         {cart.map((item) => (
                           <TableRow key={item.id}>
                             <TableCell className="font-medium">{item.name}</TableCell>
-                            <TableCell>${item.price.toFixed(2)}</TableCell>
+                            <TableCell>{formatCurrency(item.price)}</TableCell>
                             <TableCell>
                               <div className="flex items-center space-x-2">
                                 <Button 
@@ -172,7 +171,7 @@ const CartPage = () => {
                                 </Button>
                               </div>
                             </TableCell>
-                            <TableCell>${(item.price * item.quantity).toFixed(2)}</TableCell>
+                            <TableCell>{formatCurrency(item.price * item.quantity)}</TableCell>
                             <TableCell>
                               <Button 
                                 variant="ghost" 
@@ -199,16 +198,16 @@ const CartPage = () => {
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Subtotal</span>
-                        <span>${calculateSubtotal().toFixed(2)}</span>
+                        <span>{formatCurrency(calculateSubtotal())}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Tax (10%)</span>
-                        <span>${calculateTax().toFixed(2)}</span>
+                        <span>{formatCurrency(calculateTax())}</span>
                       </div>
                       <div className="border-t pt-2 mt-2">
                         <div className="flex justify-between font-semibold">
                           <span>Total</span>
-                          <span>${calculateTotal().toFixed(2)}</span>
+                          <span>{formatCurrency(calculateTotal())}</span>
                         </div>
                       </div>
                     </div>

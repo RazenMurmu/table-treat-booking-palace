@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -7,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { CheckCircle, CalendarDays, Clock, Users, Utensils } from 'lucide-react';
+import { formatCurrency } from '@/lib/utils';
 
 const ConfirmationPage = () => {
   const location = useLocation();
@@ -14,7 +14,6 @@ const ConfirmationPage = () => {
   
   const { reservation, cart, total, paymentMethod, orderNumber } = location.state || {};
   
-  // If no reservation or cart data, redirect to home
   if (!reservation || !cart || !orderNumber) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -104,7 +103,7 @@ const ConfirmationPage = () => {
                             {item.name} x {item.quantity}
                           </span>
                           <span className="font-medium">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            {formatCurrency(item.price * item.quantity)}
                           </span>
                         </div>
                       ))}
@@ -112,7 +111,7 @@ const ConfirmationPage = () => {
                     <div className="border-t pt-3">
                       <div className="flex justify-between font-semibold">
                         <span>Total:</span>
-                        <span>${(total * 1.1).toFixed(2)}</span>
+                        <span>{formatCurrency(total * 1.1)}</span>
                       </div>
                     </div>
                   </div>

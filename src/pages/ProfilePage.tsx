@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -9,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Clock, Utensils, CreditCard, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/utils';
 
 interface Booking {
   id: string;
@@ -35,17 +35,14 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState<string>('upcoming');
 
   useEffect(() => {
-    // In a real app, this would be fetched from an API
-    // For now, we'll use localStorage to simulate persistence
     const storedBookings = localStorage.getItem('bookings');
     if (storedBookings) {
       setBookings(JSON.parse(storedBookings));
     } else {
-      // Create some dummy data if no bookings exist yet
       const dummyBookings: Booking[] = [
         {
           id: '1',
-          date: new Date(Date.now() + 86400000 * 2).toISOString(), // 2 days from now
+          date: new Date(Date.now() + 86400000 * 2).toISOString(),
           time: '7:00 PM',
           guests: 2,
           tableId: 3,
@@ -60,7 +57,7 @@ const ProfilePage = () => {
         },
         {
           id: '2',
-          date: new Date(Date.now() - 86400000 * 3).toISOString(), // 3 days ago
+          date: new Date(Date.now() - 86400000 * 3).toISOString(),
           time: '6:30 PM',
           guests: 4,
           tableId: 5,
@@ -95,7 +92,6 @@ const ProfilePage = () => {
   };
 
   const modifyBooking = (bookingId: string) => {
-    // In a real app, this would navigate to a form with the booking details pre-filled
     toast({
       title: "Modify Booking",
       description: "This feature is coming soon!",
@@ -190,14 +186,14 @@ const ProfilePage = () => {
                                         {item.name} x {item.quantity}
                                       </span>
                                       <span className="font-medium">
-                                        ${(item.price * item.quantity).toFixed(2)}
+                                        {formatCurrency(item.price * item.quantity)}
                                       </span>
                                     </div>
                                   ))}
                                   <div className="border-t pt-2 mt-2">
                                     <div className="flex justify-between font-semibold">
                                       <span>Total:</span>
-                                      <span>${booking.total.toFixed(2)}</span>
+                                      <span>{formatCurrency(booking.total)}</span>
                                     </div>
                                   </div>
                                 </div>
