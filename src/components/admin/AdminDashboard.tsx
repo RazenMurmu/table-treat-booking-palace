@@ -14,7 +14,7 @@ import { CheckCircle, XCircle, Clock } from 'lucide-react';
 interface Order {
   id: string;
   customer_id: string;
-  items: any[];
+  items: any;
   total_amount: number;
   status: 'pending' | 'approved' | 'denied' | 'completed';
   customer_notes: string | null;
@@ -182,11 +182,13 @@ const AdminDashboard = () => {
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
-                        {order.items.map((item, index) => (
+                        {Array.isArray(order.items) ? order.items.map((item: any, index: number) => (
                           <div key={index} className="text-sm">
                             {item.name} x {item.quantity}
                           </div>
-                        ))}
+                        )) : (
+                          <div className="text-sm text-gray-500">No items</div>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell className="font-medium">{formatCurrency(order.total_amount)}</TableCell>
