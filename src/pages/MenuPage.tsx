@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/utils';
 
 // Menu data
 const menuCategories = [
@@ -241,7 +242,7 @@ const MenuPage = () => {
                           <CardContent className="md:w-2/3 p-6">
                             <div className="flex justify-between items-start mb-2">
                               <h3 className="text-xl font-display font-semibold">{item.name}</h3>
-                              <span className="font-medium text-lg">${item.price.toFixed(2)}</span>
+                              <span className="font-medium text-lg">{formatCurrency(item.price)}</span>
                             </div>
                             <p className="text-gray-600 mb-4">{item.description}</p>
                             <Button 
@@ -279,7 +280,7 @@ const MenuPage = () => {
                           <div>
                             <h4 className="font-medium">{item.name}</h4>
                             <p className="text-sm text-gray-500">
-                              ${item.price.toFixed(2)} x {item.quantity}
+                              {formatCurrency(item.price)} x {item.quantity}
                             </p>
                           </div>
                           <div className="flex items-center space-x-2">
@@ -309,7 +310,7 @@ const MenuPage = () => {
                   <div className="border-t pt-4 mb-6">
                     <div className="flex justify-between text-lg font-semibold">
                       <span>Total:</span>
-                      <span>${calculateTotal().toFixed(2)}</span>
+                      <span>{formatCurrency(calculateTotal())}</span>
                     </div>
                   </div>
                   
