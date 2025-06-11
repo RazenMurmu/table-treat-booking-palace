@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,7 @@ interface Order {
   customer_id: string;
   items: any;
   total_amount: number;
-  status: 'pending' | 'approved' | 'denied' | 'completed';
+  status: string;
   customer_notes: string | null;
   admin_notes: string | null;
   created_at: string;
@@ -66,7 +65,7 @@ const AdminDashboard = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setOrders(data || []);
+      setOrders((data as Order[]) || []);
     } catch (error) {
       console.error('Error fetching orders:', error);
       toast({
